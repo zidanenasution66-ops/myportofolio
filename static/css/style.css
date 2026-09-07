@@ -5,13 +5,15 @@
 }
 
 :root {
-    --ink: #0b132b;
-    --paper: #f4f7fc;
-    --card-bg: #ffffff;
-    --accent: #3a86ff;
-    --accent-dark: #1c2541;
-    --line: #d0dbe5;
-    --text-muted: #2b3a4a;
+    --ink: #e2e8f0;
+    --paper: #0b101d;
+    --card-bg: #141b2d;
+    --accent: #38bdf8;
+    --accent-bright: #7dd3fc;
+    --accent-dark: #1e293b;
+    --church-gold: #fbbf24;
+    --line: #232f48;
+    --text-muted: #94a3b8;
     --radius: 8px;
 }
 
@@ -32,10 +34,11 @@ h1, h2, h3, .brand {
     padding: 0 1.5rem;
 }
 
+/* Header / Navbar */
 .site-header {
     border-bottom: 1px solid var(--line);
-    background-color: rgba(244, 247, 252, 0.95);
-    backdrop-filter: blur(8px);
+    background-color: rgba(11, 16, 29, 0.92);
+    backdrop-filter: blur(12px);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -51,7 +54,8 @@ h1, h2, h3, .brand {
 .brand {
     font-size: 1.3rem;
     font-weight: 700;
-    color: var(--ink);
+    color: var(--accent-bright);
+    text-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
     text-decoration: none;
 }
 
@@ -65,13 +69,15 @@ h1, h2, h3, .brand {
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 600;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
 .site-header nav a:hover {
-    color: var(--accent);
+    color: var(--accent-bright);
+    text-shadow: 0 0 8px rgba(125, 211, 252, 0.5);
 }
 
+/* Hero Section */
 .hero {
     padding: 4.5rem 0 3rem;
 }
@@ -97,7 +103,7 @@ h1, h2, h3, .brand {
     font-size: 0.85rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--church-gold);
     font-weight: 700;
     margin-bottom: 0.75rem;
 }
@@ -105,6 +111,7 @@ h1, h2, h3, .brand {
 .hero-identity h1 {
     font-size: clamp(3rem, 7vw, 5rem);
     line-height: 0.95;
+    color: #ffffff;
 }
 
 .bio {
@@ -124,7 +131,7 @@ h1, h2, h3, .brand {
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--text-muted);
+    color: var(--church-gold);
     margin-bottom: 0.15rem;
 }
 
@@ -144,15 +151,18 @@ h1, h2, h3, .brand {
     font-size: 0.85rem;
     font-weight: 600;
     text-decoration: none;
-    color: #ffffff;
-    background-color: var(--accent-dark);
+    color: var(--ink);
+    background-color: var(--card-bg);
+    border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 0.5rem 1.1rem;
     transition: all 0.2s ease;
 }
 
 .social-link:hover {
-    background-color: var(--accent);
+    background-color: var(--accent-dark);
+    border-color: var(--accent);
+    color: var(--accent-bright);
     transform: translateY(-2px);
 }
 
@@ -181,9 +191,70 @@ h1, h2, h3, .brand {
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: var(--radius);
-    border: 3px solid var(--ink);
+    border: 3px solid var(--line);
 }
 
+/* Timeline Experience Section */
+.timeline {
+    position: relative;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.timeline-item {
+    position: relative;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: calc(-1.5rem - 5px);
+    top: 1.25rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+}
+
+.timeline-content {
+    background-color: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.timeline-content:hover {
+    transform: translateX(4px);
+    border-color: var(--accent);
+}
+
+.timeline-role {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--church-gold);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.timeline-content h3 {
+    font-size: 1.15rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+}
+
+.timeline-content p {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+}
+
+/* Sections & Cards */
 .section-block {
     padding: 3rem 0;
     border-top: 1px solid var(--line);
@@ -192,7 +263,7 @@ h1, h2, h3, .brand {
 .section-title {
     font-size: 2rem;
     margin-bottom: 1.5rem;
-    color: var(--ink);
+    color: #ffffff;
 }
 
 .skills-grid, .projects-grid {
@@ -206,13 +277,13 @@ h1, h2, h3, .brand {
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 1.5rem;
-    box-shadow: 0 4px 12px rgba(11, 19, 43, 0.03);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .card h3 {
     font-size: 1.2rem;
-    color: var(--accent-dark);
+    color: var(--accent-bright);
     margin-bottom: 0.5rem;
 }
 
@@ -227,7 +298,7 @@ h1, h2, h3, .brand {
 
 .card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(58, 134, 255, 0.15);
+    box-shadow: 0 8px 20px rgba(56, 189, 248, 0.15);
     border-color: var(--accent);
 }
 
