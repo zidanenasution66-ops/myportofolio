@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header class="site-header">
@@ -15,11 +16,14 @@
             <a href="#profile" class="brand">Zidane Ahdina Putra</a>
             <nav>
                 <a href="#profile">Profile</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
             </nav>
         </div>
     </header>
 
     <main>
+        <!-- Section Profile / About Me -->
         <section class="hero" id="profile">
             <div class="container hero-grid">
                 <div class="hero-identity">
@@ -28,10 +32,10 @@
                 </div>
                 <div class="hero-photo">
                     <div class="photo-block"></div>
-                    <img class="avatar" src="/static/img/Zidane's Photo.jpg" alt="Photo of Zidane">
+                    <img class="avatar" src="{% static 'img/Zidane\'s Photo.jpg' %}" alt="Photo of Zidane">
                 </div>
                 <div class="hero-details">
-                    <p class="bio">only a boy who likes playing games and watching anime, always missunderstood by other, but it's okay,  he will be fine, i guess.....</p>
+                    <p class="bio">only a boy who likes playing visual novel games, watching anime, and reading book.</p>
                     <dl class="meta-list">
                         <div class="meta-row">
                             <dt>NPM</dt>
@@ -43,9 +47,45 @@
                         </div>
                     </dl>
                     <div class="social-links">
-                        <a href="https://github.com/zidanenasution66-ops" class="social-link">GitHub</a>
-                        <a href="https://www.linkedin.com/in/zidane-ahdina-putra-604799377/" class="social-link">LinkedIn</a>
+                        <a href="https://github.com/zidanenasution66-ops" class="social-link" target="_blank">GitHub</a>
+                        <a href="https://www.linkedin.com/in/zidane-ahdina-putra-604799377/" class="social-link" target="_blank">LinkedIn</a>
                         <a href="mailto:zidanenasution66@gmail.com" class="social-link">Email</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-block" id="skills">
+            <div class="container">
+                <h2 class="section-title">Skills & Capabilities</h2>
+                <div class="skills-grid">
+                    <div class="card">
+                        <h3>Programming</h3>
+                        <p>Java and Python</p>
+                    </div>
+                    <div class="card">
+                        <h3>Language</h3>
+                        <p>English (good) and Japanese (basic)</p>
+                    </div>
+                    <div class="card">
+                        <h3>Management & Leadership</h3>
+                        <p>Strategic Planning, Team Collaboration, Project Management, & Cross-functional Leadership</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-block" id="projects">
+            <div class="container">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="card project-card">
+                        <h3>Burhan Quest</h3>
+                        <p>Game bertema petualangan berbasis Java yang menerapkan Object-Oriented Programming (OOP) dan Design Patterns secara terstruktur.</p>
+                    </div>
+                    <div class="card project-card">
+                        <h3>Personal Portfolio Web</h3>
+                        <p>Website portofolio pribadi berbasis Django, HTML5, dan CSS3 yang dirancang responsif dan di-deploy ke PWS.</p>
                     </div>
                 </div>
             </div>
