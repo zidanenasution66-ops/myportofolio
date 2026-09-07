@@ -6,13 +6,13 @@
 
 
 :root {
-    --ink: #0b132b;
-    --paper: #f4f7be;
-    --card-bg: #ffffff;
-    --accent: #3a86ff;
-    --accent-dark: #1c2541;
-    --line: #d0dbe5;
-    --text-muted: #4a5568;
+    --ink: #0b132b;          
+    --paper: #f4f7fc;
+    --card-bg: #ffffff;      
+    --accent: #3a86ff;       
+    --accent-dark: #1c2541;  
+    --line: #d0dbe5;        
+    --text-muted: #2b3a4a;
     --radius: 8px;
 }
 
