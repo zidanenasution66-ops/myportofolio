@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skills & Capabilities - {{ name }}</title>
-    {% load static %}
+    <title>Skills - {{ name }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -23,31 +22,29 @@
     </header>
 
     <main>
-    <section class="experience-section" id="skills">
-        <div class="container">
-            <p class="section-kicker">Keahlian dan kemampuan saya</p>
-            <h1>Skills & Capabilities</h1>
+        <section class="experience-section" id="skills">
+            <div class="container">
+                <p class="section-kicker">Keahlian dan kemampuan saya</p>
+                <h1>Skills & Capabilities</h1>
 
-            <div class="experience-grid">
-                {% for skill in skill_list %}
-                    <article class="experience-card">
-                        <span class="experience-category">
-                            {{ skill.category }}
-                        </span>
-                        <h2>{{ skill.category }}</h2>
-                        <p class="experience-description">
-                            {{ skill.description }}
+                <div class="experience-grid">
+                    {% for skill in skill_list %}
+                        <article class="experience-card">
+                            <span class="experience-category">Skill Category</span>
+                            <h2>{{ skill.category }}</h2>
+                            <p class="experience-description">
+                                {{ skill.description }}
+                            </p>
+                        </article>
+                    {% empty %}
+                        <p class="empty-state">
+                            Belum ada keahlian yang ditambahkan.
                         </p>
-                    </article>
-                {% empty %}
-                    <p class="empty-state">
-                        Belum ada keahlian yang ditambahkan.
-                    </p>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-    </section>
-</main>
+        </section>
+    </main>
 
     <footer class="site-footer">
         <div class="container">

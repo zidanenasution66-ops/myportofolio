@@ -18,3 +18,9 @@ Kelas : PBP F
    Kalau ditanya apa fungsionalitas dinamis yang ingin aku tambahkan pada iterasi selanjutnya yang kepikiran cuman Integrasi Database & Admin Panel (Django) buat mengelola data proyek, skills, dan experience secara dinamis melalui Django Admin/ORM tanpa perlu hardcode di file HTML.
 
 Aku tidak memakai AI sih, karena tambahan yang aku masukkan ke web ku juga simple, tidak ada gimmick ataupun sistem interaksi unik yang ada. Ku cuman nambahin dikit berdasarkan tutorial yang aku temukan di internet.
+
+
+
+### Tugas 2
+
+1. 
