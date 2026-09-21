@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<title>{% if experience %}Edit Pengalaman{% else %}Tambah Pengalaman{% endif %} - {{ name }}</title>
+{% endblock meta %}
+
+{% block content %}
+<main>
+    <section class="experience-section">
+        <div class="container">
+            <p class="section-kicker">Formulir Pengalaman</p>
+            <h1>{% if experience %}Edit Pengalaman{% else %}Tambah Pengalaman Baru{% endif %}</h1>
+
+            <form method="POST" style="margin-top: 1.5rem; max-width: 600px;">
+                {% csrf_token %}
+                <table class="form-table" style="width: 100%;">
+                    {{ form.as_table }}
+                </table>
+                
+                <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                    <button type="submit" class="button">
+                        {% if experience %}Simpan Perubahan{% else %}Tambah Pengalaman{% endif %}
+                    </button>
+                    <a href="{% url 'main:show_experience' %}" class="button button-secondary">Batal</a>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+{% endblock content %}

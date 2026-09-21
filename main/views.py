@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.core import serializers
 
 from main.models import Experience, Skill
-from main.forms import SkillForm
+from main.forms import SkillForm, ExperienceForm
 
 
 def show_main(request):
@@ -19,12 +19,63 @@ def show_main(request):
     return render(request, "index.html", context)
 
 
+def get_experience_json(request):
+    experiences = Experience.objects.all().order_by("-started_at")
+    experiences_json = serializers.serialize("json", experiences)
+    return HttpResponse(experiences_json, content_type="application/json")
+
+
 def show_experience(request):
+    json_response = get_experience_json(request)
+    experiences = serializers.deserialize(
+        "json",
+        json_response.content.decode("utf-8"),
+    )
+    experience_list = [exp.object for exp in experiences]
+
     context = {
         "name": "Zidane Ahdina Putra",
-        "experience_list": Experience.objects.all(),
+        "experience_list": experience_list,
     }
     return render(request, "experience.html", context)
+
+
+def create_experience(request):
+    form = ExperienceForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Pengalaman berhasil ditambahkan!")
+        return redirect("main:show_experience")
+
+    context = {
+        "name": "Zidane Ahdina Putra",
+        "form": form,
+    }
+    return render(request, "experience_form.html", context)
+
+
+def update_experience(request, id):
+    experience = get_object_or_404(Experience, pk=id)
+    form = ExperienceForm(request.POST or None, instance=experience)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Pengalaman berhasil diperbarui!")
+        return redirect("main:show_experience")
+
+    context = {
+        "name": "Zidane Ahdina Putra",
+        "form": form,
+        "experience": experience,
+    }
+    return render(request, "experience_form.html", context)
+
+
+def delete_experience(request, id):
+    experience = get_object_or_404(Experience, pk=id)
+    if request.method == "POST":
+        experience.delete()
+        messages.success(request, "Pengalaman berhasil dihapus!")
+    return redirect("main:show_experience")
 
 
 def get_skills_json(request):
@@ -73,7 +124,6 @@ def delete_skill(request, skill_id):
         skill.delete()
         messages.success(request, "Keahlian berhasil dihapus!")
     return redirect("main:show_skills")
-
 
 def show_xml(request):
     data = Skill.objects.all()
