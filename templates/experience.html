@@ -13,6 +13,7 @@
                     <p class="section-kicker">Perjalanan saya sejauh ini</p>
                     <h1>Experience</h1>
                 </div>
+
                 {% if user.is_superuser %}
                     <a href="{% url 'main:create_experience' %}" class="button">Tambah Pengalaman</a>
                 {% endif %}
@@ -61,16 +62,18 @@
                             <span>{{ experience.starred_by.count }} Star</span>
                         </div>
 
-                        {% if user.is_superuser %}
-                            <div class="experience-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                        <div class="experience-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                            {% if user.is_superuser or is_editor %}
                                 <a href="{% url 'main:update_experience' experience.id %}" class="button button-secondary">Edit</a>
-                                
+                            {% endif %}
+                            
+                            {% if user.is_superuser %}
                                 <form method="POST" action="{% url 'main:delete_experience' experience.id %}" style="display:inline;">
                                     {% csrf_token %}
                                     <button type="submit" class="button button-danger" onclick="return confirm('Yakin ingin menghapus pengalaman ini?')">Hapus</button>
                                 </form>
-                            </div>
-                        {% endif %}
+                            {% endif %}
+                        </div>
                     </article>
                 {% empty %}
                     <p class="empty-state">

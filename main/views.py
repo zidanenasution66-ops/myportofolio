@@ -42,7 +42,6 @@ def show_main(request):
     return render(request, "index.html", context)
 
 
-# --- API JSON EXPERIENCE (Langkah 6) ---
 def get_experience_json(request):
     experiences = Experience.objects.all().order_by("-started_at")
     experiences_json = serializers.serialize(
@@ -56,10 +55,12 @@ def get_experience_json(request):
 
 def show_experience(request):
     experience_list = Experience.objects.all().order_by("-started_at")
+    user_is_editor = is_editor(request.user)
 
     context = {
         "name": "Zidane Ahdina Putra",
         "experience_list": experience_list,
+        "is_editor": user_is_editor,
     }
     return render(request, "experience.html", context)
 
@@ -84,9 +85,9 @@ def create_experience(request):
 
 @login_required(login_url="/login/")
 def update_experience(request, id):
-    if not request.user.is_superuser:
+    if not (request.user.is_superuser or is_editor(request.user)):
         raise PermissionDenied
-
+    
     experience = get_object_or_404(Experience, pk=id)
     form = ExperienceForm(request.POST or None, instance=experience)
     if request.method == "POST" and form.is_valid():
@@ -233,3 +234,6 @@ def star_experience(request, id):
             experience.starred_by.add(request.user)
             messages.success(request, "Pengalaman berhasil di-star!")
     return redirect("main:show_experience")
+
+def is_editor(user):
+    return user.is_authenticated and user.groups.filter(name='Editor').exists()
