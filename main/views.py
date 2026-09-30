@@ -8,9 +8,12 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 from main.models import Experience, Skill
 from main.forms import SkillForm, ExperienceForm
+from main.forms import ExperienceForm
 
 
 def register(request):
@@ -43,27 +46,50 @@ def show_main(request):
 
 
 def get_experience_json(request):
-    experiences = Experience.objects.all().order_by("-started_at")
-    experiences_json = serializers.serialize(
-        "json", 
-        experiences, 
-        use_natural_foreign_keys=True,
-        use_natural_primary_keys=True
-    )
-    return HttpResponse(experiences_json, content_type="application/json")
+    title_query = request.GET.get("title", "").strip()
+    
+    experiences = Experience.objects.prefetch_related('starred_by').all()
+
+    if title_query:
+        experiences = experiences.filter(title__icontains=title_query)
+
+    data = []
+    for exp in experiences:
+        starred_users = exp.starred_by.all()
+        is_starred = request.user in starred_users if request.user.is_authenticated else False
+        starred_by_names = ", ".join([u.username for u in starred_users])
+        tech_stack_val = getattr(exp, 'tech_stack', getattr(exp, 'role', ''))
+        project_url_val = getattr(exp, 'project_url', getattr(exp, 'url', ''))
+        project_image_url_val = getattr(exp, 'project_image_url', getattr(exp, 'image_url', ''))
+
+        data.append({
+            "pk": str(exp.pk),
+            "fields": {
+                "title": getattr(exp, 'title', ''),
+                "description": getattr(exp, 'description', ''),
+                "tech_stack": exp.tech_stack,
+                "project_url": exp.project_url,
+                "project_image_url": exp.project_image_url,
+                "star_count": len(starred_users),
+                "is_starred": is_starred,
+                "starred_by_names": starred_by_names,
+            }
+        })
+
+    return JsonResponse(data, safe=False)
 
 
 def show_experience(request):
-    experience_list = Experience.objects.all().order_by("-started_at")
+    title_query = request.GET.get("title", "").strip()
     user_is_editor = is_editor(request.user)
 
     context = {
         "name": "Zidane Ahdina Putra",
-        "experience_list": experience_list,
+        "title_query": title_query,
         "is_editor": user_is_editor,
+        "form": ExperienceForm(),
     }
     return render(request, "experience.html", context)
-
 
 @login_required(login_url="/login/")
 def create_experience(request):
@@ -237,3 +263,21 @@ def star_experience(request, id):
 
 def is_editor(user):
     return user.is_authenticated and user.groups.filter(name='Editor').exists()
+
+@require_POST
+def create_experience_ajax(request):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {"message": "Hanya pemilik portofolio yang dapat menambahkan pengalaman."},
+            status=403,
+        )
+
+    form = ExperienceForm(request.POST)
+    if form.is_valid():
+        experience = form.save()
+        return JsonResponse(
+            {"message": "Pengalaman berhasil ditambahkan.", "pk": str(experience.id)},
+            status=201,
+        )
+
+    return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
